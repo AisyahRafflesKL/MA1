@@ -131,6 +131,7 @@ class world3 extends Phaser.Scene {
     this.npcAunty.setScale(1.3);
     this.npcAunty.setCollideWorldBounds(true);
     this.npcAunty.body.setAllowGravity(false);
+    this.npcAunty.body.setAllowGravity(false);
 
     // excelMints
     this.excelMint = this.physics.add.group();
@@ -571,6 +572,9 @@ class world3 extends Phaser.Scene {
    nextLevel(player, trigger) {
     console.log("Next level reached!");
     if (this.score >= 6) {
+      if (this.mountainBgSound) {
+        this.mountainBgSound.stop();
+      }
       this.scene.start("winScene");
     } else {
       const mintsNeeded = 6 - this.score;
