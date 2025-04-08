@@ -697,6 +697,12 @@ collectMint(player, mint) {
 takeDamage(player, enemy) {
     enemy.disableBody(true, true); // Remove the enemy
 
+    // If score is already 0, trigger fall damage
+    if (this.score === 0) {
+        this.playerFallDamage();
+        return;
+    }
+
     // Play damage sound
     this.sound.play('ciggarDamageSound');
 
@@ -704,7 +710,7 @@ takeDamage(player, enemy) {
     this.player.setTint(0xff0000);
     this.cameras.main.shake(300, 0.02);
 
-    // Decrease the score by 1 but don't go below 0
+    // Decrease the score by 1
     if (this.score > 0) {
         this.score -= 1;
     }
@@ -722,7 +728,7 @@ takeDamage(player, enemy) {
     });
 
     console.log("Hit by enemy! Score decreased to: " + this.score);
-  }
+}
 
 // Define playerFallDamage function
 playerFallDamage() {
