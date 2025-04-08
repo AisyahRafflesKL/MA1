@@ -490,6 +490,9 @@ class world1 extends Phaser.Scene {
       if (this.sound.get("switchSound")) {
         this.sound.play("switchSound", { volume: 1 });
       }
+      if (this.mountainBgSound) {
+        this.mountainBgSound.pause();
+      }
       this.scene.launch("storyboardW1");
       this.scene.pause();
     });
