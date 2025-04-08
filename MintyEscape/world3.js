@@ -547,8 +547,8 @@ class world3 extends Phaser.Scene {
         this.sound.play("switchSound", { volume: 0.5 });
       }
       if (this.mountainBgSound) {
-    this.mountainBgSound.pause();
-  }
+        this.mountainBgSound.pause();
+      }
       this.scene.launch("storyboardW3");
       this.scene.pause();
     });
@@ -803,6 +803,12 @@ class world3 extends Phaser.Scene {
   //    Define takeDamage function
   takeDamage(player, enemy) {
     enemy.disableBody(true, true); // Remove the enemy
+
+    // If score is already 0, trigger fall damage
+    if (this.score === 0) {
+        this.playerFallDamage();
+        return;
+    }
 
     // Play damage sound
     this.sound.play("ciggarDamageSound");
