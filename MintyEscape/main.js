@@ -22,8 +22,31 @@ class main extends Phaser.Scene {
     });
 
     // sounds
-    this.load.audio("mountainBgSound", "assets/mountainBgSound.mp3");
     this.load.audio("switchSound", "assets/switchSound.mp3");
+  }
+
+  setupAudio() {
+    this.sound.pauseOnBlur = false;
+    this.switchSound = this.sound.add("switchSound", { volume: 1 });
+
+    this.input.once("pointerdown", () => {
+      if (this.sound.context.state === "suspended") {
+        this.sound.context.resume();
+      }
+    });
+  }
+
+  setupButtonHandlers(playButton, controlsButton) {
+    playButton.on("pointerdown", () => {
+      this.sound.play("switchSound", { volume: 1 });
+      this.scene.start("world1");
+    });
+
+    controlsButton.on("pointerdown", () => {
+      this.sound.play("switchSound", { volume: 1 });
+      this.scene.launch("storyboardWMain");
+      this.scene.pause();
+    });
   }
 
   create() {
@@ -33,30 +56,6 @@ class main extends Phaser.Scene {
     this.createBackgrounds();
     this.createAnimations();
     this.createUI();
-  }
-
-  setupAudio() {
-    this.sound.pauseOnBlur = false;
-    this.switchSound = this.sound.add("switchSound", { volume: 1 });
-    this.mountainBgSound = this.sound.add("mountainBgSound", {
-      loop: true,
-      volume: 1,
-    });
-
-    this.input.once("pointerdown", () => {
-      if (this.sound.context.state === "suspended") {
-        this.sound.context.resume();
-      }
-      if (!this.mountainBgSound.isPlaying) {
-        this.mountainBgSound.play();
-      }
-    });
-
-    this.events.on("resume", () => {
-      if (this.mountainBgSound) {
-        this.mountainBgSound.resume();
-      }
-    });
   }
 
   createBackgrounds() {
@@ -129,21 +128,6 @@ class main extends Phaser.Scene {
     });
 
     return button;
-  }
-
-  setupButtonHandlers(playButton, controlsButton) {
-    playButton.on("pointerdown", () => {
-      this.sound.play("switchSound", { volume: 1 });
-      this.mountainBgSound.stop();
-      this.scene.start("world1");
-    });
-
-    controlsButton.on("pointerdown", () => {
-      this.sound.play("switchSound", { volume: 1 });
-      this.mountainBgSound.pause();
-      this.scene.launch("storyboardWMain");
-      this.scene.pause();
-    });
   }
 
   createCredits() {
