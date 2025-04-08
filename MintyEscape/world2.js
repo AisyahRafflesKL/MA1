@@ -537,6 +537,9 @@ this.guideButton.on('pointerdown', () => {
   if (this.sound.get('switchSound')) {
     this.sound.play('switchSound', { volume: 1 });
   }
+  if (this.mountainBgSound) {
+    this.mountainBgSound.pause();
+  }
   this.scene.launch('storyboardW2');
   this.scene.pause();
 });
